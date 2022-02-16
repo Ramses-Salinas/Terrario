@@ -13,6 +13,8 @@ dragElement(document.getElementById("plant12"));
 dragElement(document.getElementById("plant13"));
 dragElement(document.getElementById("plant14"));
 
+let clicks = 0;
+
 function dragElement(terrariumElement) {
     //Establecer 4 posiciones para el posicionamiento en la patalla
     let pos1 = 0,
@@ -24,13 +26,25 @@ function dragElement(terrariumElement) {
     function pointerDrag(e) {
         e.preventDefault();
         console.log(e);
+        clicks++;
         pos3 = e.clientX;
         pos4 = e.clientY;
         document.onpointermove = elementDrag;
         document.onpointerup = stopElementDrag;
+        setTimeout(() => {
+            console.log("activado");
+            if (clicks >= 2) {
+                terrariumElement.style.top = 0;
+                terrariumElement.style.left = 0;
+                clicks = 0;
+            } else {
+                clicks = 0;
+            }
+        }, 300);
     }
 
     function elementDrag(e) {
+        clicks = 0;
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
